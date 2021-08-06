@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Heal - About {% endblock %}
+
+{% block content %}
+<!-- About Section-->
+<section class="page-section bg-primary text-white mb-0" id="about">
+    <div class="container">
+        <!-- About Section Heading-->
+        <h2 class="page-section-heading text-center text-uppercase text-white">Datasets and Methods</h2>
+        <!-- Icon Divider-->
+        <div class="divider-custom divider-light">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+            <div class="divider-custom-line"></div>
+        </div>
+        <!-- About Section Content-->
+        <div class="row">
+            <div class="col-lg-4 ms-auto"><p class="lead">The labeled and unlabeled dataset used to test the HEAL annotation server is available below.</p>
+                <p class="lead">The data consist of 9 features with numeric data type.</p>
+            </div>
+            <div class="col-lg-4 me-auto"><p class="lead">HEAL provides a reliable and costless alternative to existing Active learning that requires an human-in-the-loop to reinforce the accuracy of base model.</p></div>
+        </div>
+        <!-- About Section Button-->
+        <div class="text-center mt-4">
+            <a class="btn btn-xl btn-outline-light" href="{% static '/samples/cancer_labdata_sample.csv'%}" download="cancer_labdata_sample.csv">
+                <i class="fas fa-download me-2"></i>
+                Download sample labeled dataset &nbsp; &nbsp;
+            </a>
+        </div>
+        <div class="text-center mt-4">
+            <a class="btn btn-xl btn-outline-light" href="{% static '/samples/cancer_unlabdata_sample.csv'%}" download="cancer_labdata_sample.csv">
+                <i class="fas fa-download me-2"></i>
+                Download sample unlabeled dataset
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

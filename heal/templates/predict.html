@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Heal - Contact {% endblock %}
+
+{% block content %}
+
+<div class="container nav-margin">
+  <div class="row">
+    <div class="col">
+      <span>
+          <p>Upload both labeled and unlabeled datasets to annotate the unlabeled dataset. Be patient because prediction can take a few minutes </p>
+      </span>
+    </div>
+
+  </div>
+  <div class="row">
+
+      <div class="col-md-10 result overflow-scroll">
+        <h5>Result of the Active Learning analysis</h5>
+          <ul class="list-group">
+            {% for key, item in result.items %}
+                <li class="mb-3 list-group-item">{{key}}</li>
+                  <ul class="list-unstyled">
+                  {% for _,line in item.items %}
+                    <li class="mb-1">{{line}}</li>
+                  </ul>
+                  {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col-md-2"></div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-12 spaceup">
+      <a href="{% static '/outdir/'%}{{ download_file }}" download="{{ download_file }}"  class="btn btn-dark">Download Result</a>
+    </div>
+  </div>
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,42 @@
+{% url 'public:index' as url_index %}
+{% url 'public:about' as url_about %}
+{% url 'public:dataset' as url_dataset %}
+{% url 'contact:contact' as url_contact %}
+<!--{% url 'accounts:profile' as url_profile %}-->
+
+<!--    <span>{% if request.path == url_index %} Home {% else %}<a href="{{ url_index }}">Home</a>{% endif %}</span>-->
+<!--    <span>{% if request.path == url_about %} About {% else %}<a href="{{ url_about }}">About</a>{% endif %}</span>-->
+<!--    <span>{% if request.path == url_contact %} Contact {% else %}<a href="{{ url_contact }}">Contact</a>{% endif %}</span>-->
+
+
+<div>
+<!--    <span style="float:right">-->
+<!--        {% if user.is_authenticated %}-->
+<!--            <span>Hi {% if request.path == url_profile %} {{user.username}}! {% else %} <a href="{{ url_profile }}">{{user.username}}!</a> {% endif %}</span>-->
+<!--            <span><a href="{% url 'accounts:logout' %}">Logout</a> </span>-->
+<!--        {% else %}-->
+<!--            <span><a href="{% url 'accounts:login' %}">Login</a> </span>-->
+<!--        {% endif %}-->
+<!--    </span>-->
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+        <div class="container">
+            <a class="navbar-brand" href="#page-top">HEAL Annotator</a>
+            <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == url_index %} active {% endif %}" href="{{ url_index }}">Home</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == url_contact %} active {% endif %}" href="{{ url_contact }}">Predict</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == url_about %} active {% endif %}" href="{{ url_about }}">Instruction</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded {% if request.path == url_dataset %} active {% endif %}" href="{{ url_dataset }}">Datasets and Methods</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>
+<br>
+<!--{{request.path}}-->
+<!--{{url_about}}-->

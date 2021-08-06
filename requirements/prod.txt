@@ -1,0 +1,4 @@
+django==3.2.3
+pandas==1.2.4
+lightgbm==3.2.1
+imbalanced-learn==0.8.0

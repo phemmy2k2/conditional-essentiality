@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Heal - Contact {% endblock %}
+
+{% block content %}
+
+<div class="container nav-margin">
+  <div class="row">
+    <div class="col">
+      <span>
+          <p>HEAL (Heuristic Enabled Active Learning) Annotator is a web-server for predicting class labels in a binary classification when there is limited label data. HEAL provides a reliable and costless alternative to the existing Active learning model that requires an human-in-the-loop to reinforce the accuracy of base model.</p>
+
+          <p>Upload both labeled and unlabeled datasets to annotate the unlabeled dataset. Be patient because prediction can take a few minutes </p>
+      </span>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col">
+      <!-- Contact Section-->
+        <div class="control-group contact-set">
+            <div class="form-group custom-file">
+                <form class="row row-cols-lg-auto g-3 align-items-center" method="GET" >
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-dark"> Start New Analysis </button>
+                    </div>
+                </form>
+                <form class="row row-cols-lg-auto g-3 align-items-center" method="POST" enctype="multipart/form-data" id="form1" onsubmit="trig()">
+                    {% csrf_token %}
+                   {{form.as_p}}
+                    <div>
+                        <span class="visible-sm-block">3. Select threshold</span>
+                        <select name="threshold" class="custom-select custom-select-md mb-3">
+                          <option selected class="disabled">Threshold (0.9)</option>
+                            {% for item in thresholds %}
+                                <option value="{{item}}">{{item}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-block btn-primary" name="desc_stats" value="desc_stats">4. Data Description </button>
+
+                    <button type="submit" class="btn btn-block btn-primary" name="load_file" value="load_file" id="load_file">
+                        <i class="loading-icon fa fa-spinner fa-spin d-none"></i>
+                        <span class="btn_txt">  5. Annotate Unlabelled data </span>
+                    </button>
+                    {% if result %}
+                    <input class="form-control d-none" type="text" name="labdata" value={{result.lab}}>
+                    <input class="form-control d-none" type="text" name="unlabdata" value={{result.unlab}}>
+                    {% endif %}
+                </form>
+
+                <!--<div class="col-12 {{disp}} spaceup">
+                    <a href="{% static '/outdir/'%}{{ download_file }}" download="{{ download_file }}"  class="btn btn-dark">6. Download Result</a>
+                </div>-->
+
+            </div>
+        </div>
+    </div>
+    <div class="col-6 result">
+        <h5>Statistics of the analysis</h5>
+      <ul class="list-unstyled">
+            {% for key, item in result.items %}
+                <li class="mb-3">{{key}}: {{item}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="col">
+
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+    function trig() {
+        $(".loading-icon").removeClass("d-none");
+
+        $(".btn_txt").text("Please wait while the program is running ...")
+    }
+</script>
+{% endblock %}
