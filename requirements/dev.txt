@@ -1,6 +1,0 @@
-# Everything the developer needs in addition to the production requirements
--r prod.txt
-
-black==21.5b1
-mypy==0.812
-
