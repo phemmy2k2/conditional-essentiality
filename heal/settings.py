@@ -24,9 +24,9 @@ PROJECT_DIR = os.path.join(BASE_DIR, "heal")
 SECRET_KEY = "django-insecure-)f!(rs1j^wj53s&q!hvwj0_40p-b8m90y%5@j$w2@bw5j6ml*p"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["cuheal.herokuapp.com","127.0.0.1"]
 
 
 # Application definition

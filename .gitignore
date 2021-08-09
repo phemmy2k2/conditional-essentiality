@@ -26,7 +26,7 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
-Scripts/
+
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -130,4 +130,4 @@ dmypy.json
 .pyre/
 
 # Femi
-Scripts/
+#Scripts/
