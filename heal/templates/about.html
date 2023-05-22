@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %} Heal - About {% endblock %}
+
+{% block content %}
+<!-- About Section-->
+<section class="page-section bg-primary text-white mb-0" id="about">
+    <div class="container">
+        <!-- About Section Heading-->
+        <h2 class="page-section-heading text-center text-uppercase text-white">Instruction</h2>
+        <!-- Icon Divider-->
+        <div class="divider-custom divider-light">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+            <div class="divider-custom-line"></div>
+        </div>
+        <!-- About Section Content-->
+        <div class="row">
+            <div class="col ms-auto">
+                <p class="lead">The HEAL annotation server predicts the class label of samples based on a collection of informative features using Ensemble machine learning algorithm as the base classifier. </p>
+                <p class="lead">The HEAL annotation server requires labeled and unlabeled datasets in csv format, and can not handle file size more than 1Mb. This implies that feature selection should be performed before using this tool for data with large featureset.</p>
+                <p class="lead">The base model performance indicates the confidence of the prediction. It is recommended to have a minimum of 90% base model accuracy for a reliable prediction.</p>
+                <p class="lead">Select a threshold for the active learning component. The threshold determines the stringency level of the Active learning component (Default=0.9)</p>
+                <p class="lead">After the server successfully finishes the job, the statistics from the analysis is diplayed on the right hand side of the screen. If an error happens during the prediction a log will appear specifying the error.</p>
+
+                <p>Contact phemmysmart@gmail.com for other enquires. </p>
+<!--            <div class="col-lg-4 me-auto"><p class="lead">You can create your own custom avatar for the masthead, change the icon in the dividers, and add your email address to the contact form to make it fully functional!</p></div>-->
+        </div>
+
+    </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Heal - Contact {% endblock %}
+
+{% block content %}
+
+<div class="container nav-margin">
+  <div class="row">
+    <div class="col">
+      <span>
+          <p>HEAL (Heuristic Enabled Active Learning) Annotator is a web-server for predicting class labels in a binary classification when there is limited label data. HEAL provides a reliable and costless alternative to the existing Active learning model that requires an human-in-the-loop to reinforce the accuracy of base model.</p>
+
+          <p>Upload both labeled and unlabeled datasets to annotate the unlabeled dataset. Be patient because prediction can take a few minutes </p>
+      </span>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col">
+        <img src="{% static '/theme/assets/ajax-loader.gif'%}">
+        <span class="mt-10">"This will take some time..."</span>
+  </div>
+</div>
+
+
+{% endblock %}
+
+

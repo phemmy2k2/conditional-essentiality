@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Heal {% endblock %}
+
+{% block content %}
+<!--<img class="masthead-avatar mb-5" src="static/theme/assets/img/avataaars.svg" alt="..." />-->
+<!--<img class="masthead-avatar mb-5" src="{% static 'theme/assets/img/avataaars.svg' %}" alt="..." />-->
+<!--{% url '% static' as stat %}-->
+<!--<h1>{{ stat }}</h1>-->
+
+<!--Randomly generate a number -->
+
+<!--<h1> Heuristic Enabled Active Annotator </h1>-->
+<header class="masthead bg-primary text-white text-center">
+    <div class="container d-flex align-items-center flex-column">
+        <!-- Masthead Avatar Image-->
+        <img class="masthead-avatar mb-5" src="{% static 'theme/assets/img/culogo.jpg' %}" alt="..." />
+        <!-- Masthead Heading-->
+        <h1 class="masthead-heading text-uppercase mb-0">Heuristic Enabled AL Annotator</h1>
+        <!-- Icon Divider-->
+        <div class="divider-custom divider-light">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+            <div class="divider-custom-line"></div>
+        </div>
+        <!-- Masthead Subheading-->
+        <p class="masthead-subheading font-weight-light mb-0">Machine Learning - Active Learning - Annotation</p>
+    </div>
+
+</header>
+{% endblock %}
