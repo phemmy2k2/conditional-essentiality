@@ -11,6 +11,7 @@ from sklearn import preprocessing
 from sklearn.impute import SimpleImputer
 import math
 
+# the preprocess function helps to prepare the data for ML analysis
 def preprocess(X):
     # X = np.nan_to_num(X)
     X[X == np.inf] = 0
@@ -25,20 +26,7 @@ def preprocess(X):
     X = scaler.fit_transform(numpyMatrix)
     return X
 
-
-# def feature_selector(X, y, num_feats= 9): #400 #9(PPI) #21(topology), num_feats= 400,, weight
-#     from sklearn.feature_selection import SelectFromModel
-#     # from lightgbm import LGBMClassifier
-#
-#     lgbc = LGBMClassifier(n_estimators=500, learning_rate=0.05, num_leaves=32, colsample_bytree=0.2,
-#                           reg_alpha=3, reg_lambda=1, min_split_gain=0.01, min_child_weight=40, n_jobs=6) #, scale_pos_weight=weight
-#
-#     embeded_lgb_selector = SelectFromModel(lgbc, threshold=1) #, max_features=num_feats
-#     embeded_lgb_selector.fit(X, y)
-#
-#     embeded_lgb_support = embeded_lgb_selector.get_support()
-#     return embeded_lgb_support
-
+# the execmodel implements the Heuristic Active Machine Learning algorithm
 def execmodel(unlab_dat, lab_dat, cuttoff, outdir, endloop, res_store, acc, result, i):
     print("Shape of labelled data %s" % str(lab_dat.shape))
     print("Shape of unlabelled data %s" % str(unlab_dat.shape))
@@ -118,11 +106,6 @@ def execmodel(unlab_dat, lab_dat, cuttoff, outdir, endloop, res_store, acc, resu
     probs = clf_best.predict_proba(unlab)[::, 1]  # [:, ind_best]
     # probs = clf_best.predict_proba(unlab[:, ind_best])[::, 1]
 
-    # cols = np.array(X_temp.columns)[ind_best]
-    # print('No of features selected is %d' %len(cols))
-    # feat_imp = pd.Series(clf_best.feature_importances_, cols)
-    # feat_imp.to_csv(''.join(('data/cml/cancer/featImp/pred_round_', str(i - 1), '.csv')))
-
     # separate data based on predictions in the specified range
     res = pd.DataFrame([list(unlab_dat.index), list(probs)])
     res = res.transpose()
@@ -186,6 +169,8 @@ def execmodel(unlab_dat, lab_dat, cuttoff, outdir, endloop, res_store, acc, resu
     return out, res_store, acc
 
 result = {}
+
+# The perform_CML validates the input data conforms to the model before calling the HEAL model
 def perform_CML(userId, lab_path, unlab_path, outdir, threshold):
     # load labeled data
     i = 1
@@ -214,9 +199,7 @@ def perform_CML(userId, lab_path, unlab_path, outdir, threshold):
         result['error'] = "There is inconsistency in the variable names in the input data"
         return result
 
-    # Ensure all columns are numeric type
-    # print(lab_dat.dtypes)
-
+    # Ensure all columns are numeric type   
     col_dtypes = lab_dat.dtypes.to_dict()
     for item, typ in col_dtypes.items():
         if (typ not in my_type):
@@ -224,12 +207,7 @@ def perform_CML(userId, lab_path, unlab_path, outdir, threshold):
             return result
 
     endloop = unlab_dat.shape[0] // 10
-    # label_class_dist = Counter(lab_dat['label'])
-    # lab_dat_size = lab_dat.shape[0]
-    # unlab_dat_size = unlab_dat.shape[0]
-    # lab_ratio = round(unlab_dat_size/lab_dat_size, 2)
-    # pos_ratio = round(label_class_dist[0]/label_class_dist[1], 2)
-
+   
     while (unlab_dat.shape[0] > 1):
         print('\n' + 'Loop %d\n' % i)
         out, res_store, acc = execmodel(unlab_dat, lab_dat, threshold, outdir, endloop, res_store, acc, result, i)
@@ -238,15 +216,7 @@ def perform_CML(userId, lab_path, unlab_path, outdir, threshold):
         lab_dat = pd.concat([lab_dat, out], axis=0, sort=False)
 
         i += 1
-    # compute and store basic stats of the data
-    # result['label_class_dist'] = Counter(lab_dat['label'])
-
-    # result['Number of labeled samples'] = lab_dat_size
-    # result['Number of unlabeled samples'] = unlab_dat_size
-    # result['Ratio of labeled to unlabeled dataset '] = str(1) + " : " + str(lab_ratio)
-    # result['Ratio of Pos/Neg in labeled dataset '] = str(1) + " : " + str(pos_ratio)
-    # result['Number of features '] = unlab_dat.shape[1]
-    # result['Base model accuracy '] = str(round(acc[0] * 100, 2)) + "%"
+   
     result['download_file'] = 'pred_' + str(userId) + '.csv'
     return result
 
@@ -272,8 +242,6 @@ def main(userId, lab_file, unlab_file, threshold=0.9):
         return result
 
 # if __name__ == '__main__':
-#     # get_data()
-#     userId = 8991
 #     threshold = 0.9
 #     lab_path = 'data/cml/cancer/cancer_labdata_sample.csv'
 #     unlab_path = 'data/cml/cancer/cancer_unlabdata_sample.csv'
