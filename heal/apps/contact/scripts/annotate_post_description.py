@@ -11,6 +11,7 @@ from sklearn import preprocessing
 from sklearn.impute import SimpleImputer
 import math
 
+# the preprocess function helps to prepare the data for ML analysis
 def preprocess(X):
     # X = np.nan_to_num(X)
     X[X == np.inf] = 0
@@ -25,20 +26,7 @@ def preprocess(X):
     X = scaler.fit_transform(numpyMatrix)
     return X
 
-
-# def feature_selector(X, y, num_feats= 9): #400 #9(PPI) #21(topology), num_feats= 400,, weight
-#     from sklearn.feature_selection import SelectFromModel
-#     # from lightgbm import LGBMClassifier
-#
-#     lgbc = LGBMClassifier(n_estimators=500, learning_rate=0.05, num_leaves=32, colsample_bytree=0.2,
-#                           reg_alpha=3, reg_lambda=1, min_split_gain=0.01, min_child_weight=40, n_jobs=6) #, scale_pos_weight=weight
-#
-#     embeded_lgb_selector = SelectFromModel(lgbc, threshold=1) #, max_features=num_feats
-#     embeded_lgb_selector.fit(X, y)
-#
-#     embeded_lgb_support = embeded_lgb_selector.get_support()
-#     return embeded_lgb_support
-
+# the execmodel implements the Heuristic Active Machine Learning algorithm
 def execmodel(unlab_dat, lab_dat, cuttoff, outdir, endloop, res_store, acc):
     print("Shape of labelled data %s" % str(lab_dat.shape))
     print("Shape of unlabelled data %s" % str(unlab_dat.shape))
@@ -112,12 +100,7 @@ def execmodel(unlab_dat, lab_dat, cuttoff, outdir, endloop, res_store, acc):
     unlab = preprocess(unlab_dat.values)
     probs = clf_best.predict_proba(unlab)[::, 1]  # [:, ind_best]
     # probs = clf_best.predict_proba(unlab[:, ind_best])[::, 1]
-
-    # cols = np.array(X_temp.columns)[ind_best]
-    # print('No of features selected is %d' %len(cols))
-    # feat_imp = pd.Series(clf_best.feature_importances_, cols)
-    # feat_imp.to_csv(''.join(('data/cml/cancer/featImp/pred_round_', str(i - 1), '.csv')))
-
+   
     # separate data based on predictions in the specified range
     res = pd.DataFrame([list(unlab_dat.index), list(probs)])
     res = res.transpose()
@@ -149,9 +132,7 @@ def execmodel(unlab_dat, lab_dat, cuttoff, outdir, endloop, res_store, acc):
             else:
                 print('res_store is populates, shape is %s' % str(res_store.shape))
                 res_store = pd.concat([res_store, res], axis=0, sort=False)
-        # res.to_csv(''.join(('data/cml/cancer/predictions/pred_round_', str(i - 1), '.csv')), index=False)
-        # print('Ratio of +ve and -ve prediction to be added to labelled data %s ' %str(Counter(res['prediction'])))
-        # print('Number of new samples to be added to the labelled data for round %d is %d' % (i, res.shape[0]))
+        
         else:
             res_store = pd.concat([res_store, res], axis=0, sort=False)
             res_store.to_csv(outdir, index=False)
@@ -162,13 +143,7 @@ def execmodel(unlab_dat, lab_dat, cuttoff, outdir, endloop, res_store, acc):
 
     out = inc.copy()
     out['label'] = res.prediction.values
-    # print(out['label'].value_counts())
-    # res.to_csv('dm/al_test/pred_select.csv', index=None)
-
-    # filter classifier output and update label and unlabel data
-    # lab_dat = pd.concat([lab_dat, out], axis=0, sort=False)
-    # print(Counter(lab_dat['label']))
-
+    
     # set unused variables to None
     del inc
     del res
@@ -177,6 +152,8 @@ def execmodel(unlab_dat, lab_dat, cuttoff, outdir, endloop, res_store, acc):
     return out, res_store, acc
 
 result = {}
+
+# The perform_CML validates the input data conforms to the model before calling the HEAL model
 def perform_CML(userId, lab_path, unlab_path, outdir, threshold):
     # load labeled data
     i = 1
@@ -197,17 +174,13 @@ def perform_CML(userId, lab_path, unlab_path, outdir, threshold):
         # Validate if it is a binary classification by using Counter
         count_lab = Counter(lab_dat['label'])
         assert (0 in count_lab and 1 in count_lab), ' The label values are not 0 and 1'
-        # print(count_lab)
-        # print(len(count_lab))
-        # print(count_lab[0], count_lab[1])
+
     else:
         # failure
         result['error'] = "There is inconsistency in the variable names in the input data"
         return result
 
     # Ensure all columns are numeric type
-    # print(lab_dat.dtypes)
-
     col_dtypes = lab_dat.dtypes.to_dict()
     for item, typ in col_dtypes.items():
         if (typ not in my_type):
